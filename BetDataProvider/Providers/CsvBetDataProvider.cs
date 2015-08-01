@@ -40,7 +40,7 @@ namespace BetDataAcquisition.Providers
                 }
 
                 if (newBets.Any())
-                {
+                { 
                     OnBetsProvided(new BetsProvidedEventArgs(newBets));
                 }
 

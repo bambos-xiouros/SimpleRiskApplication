@@ -6,9 +6,11 @@
         xmlns:local="clr-namespace:SimpleRiskApplication"
         mc:Ignorable="d"
         Title="Simple Risk Application" Height="350" Width="525"
-        Loaded="Window_Loaded" Closing="Window_Closing">
+        Loaded="Window_Loaded" Closing="Window_Closing" 
+        Icon="Resources/logosmall.png">
+
     <Grid>
-        <ListView ItemsSource="{Binding BetViewModels}">
+        <ListView ItemsSource="{Binding BetViewModels}" Margin="5">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Customer" DisplayMemberBinding="{Binding Customer}"/>
