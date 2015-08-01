@@ -16,6 +16,7 @@
                     <GridViewColumn Header="Participant" DisplayMemberBinding="{Binding Participant}"/>
                     <GridViewColumn Header="Stake" DisplayMemberBinding="{Binding Stake}"/>
                     <GridViewColumn Header="Win" DisplayMemberBinding="{Binding Win}"/>
+                    <GridViewColumn Header="Settled" DisplayMemberBinding="{Binding Settled}"/>
                 </GridView>
             </ListView.View>
         </ListView>

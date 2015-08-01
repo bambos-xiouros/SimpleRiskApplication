@@ -1,7 +1,11 @@
+using System.Threading.Tasks;
+
 namespace BetDataAcquisition
 {
     public abstract class BetDataProvider
     {
+        private Task _task;
+
         public event BetsProvidedEventHandler BetsProvided;
         public event BetsProviderFinishedEventHandler BetsProviderFinished;
 
@@ -12,7 +16,7 @@ namespace BetDataAcquisition
             if (!Running)
             {
                 Running = true;
-                OnStart();
+                _task = Task.Factory.StartNew(OnStart);
             }
         }
 
@@ -42,6 +46,11 @@ namespace BetDataAcquisition
         }
 
         protected abstract void OnStart();
-        protected abstract void OnStop();
+
+        protected virtual void OnStop()
+        {
+            _task.Wait();
+            _task = null;
+        }
     }
 }

@@ -2,8 +2,21 @@
 
 namespace SimpleRiskApplication.Config
 {
-    public class RandomBetDataProviderSection : ConfigurationSection
+    public class RandomBetDataProvider : ConfigurationSection
     {
+        [ConfigurationProperty("id", IsRequired = true, IsKey = true)]
+        public int Id
+        {
+            get
+            {
+                return (int)this["id"];
+            }
+            set
+            {
+                this["id"] = value;
+            }
+        }
+
         [ConfigurationProperty("numberOfBets", IsRequired = true)]
         public int NumberOfBets
         {

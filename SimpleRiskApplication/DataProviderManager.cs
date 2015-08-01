@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using BetDataAcquisition;
@@ -21,27 +22,11 @@ namespace SimpleRiskApplication
 
         public void CreateDataProvidersFromConfig()
         {
-            var dataProviderSectionGroup = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None).SectionGroups["DataProviderGroup"] as DataProviderSectionGroup;
-            if (dataProviderSectionGroup != null)
+            var betDataProviders = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None).Sections["BetDataProviders"] as BetDataProviders;
+            if (betDataProviders != null)
             {
-                foreach (var dataProviderSection in dataProviderSectionGroup.Sections)
-                {
-                    BetDataProvider betDataProvider = null;
-                    if (dataProviderSection is RandomBetDataProviderSection)
-                    {
-                        var randomBetDataProviderSection = dataProviderSection as RandomBetDataProviderSection;
-                        betDataProvider = _betDataProviderFactory.CreateRandomBetDataProvider(randomBetDataProviderSection.NumberOfBets, randomBetDataProviderSection.MaxBetBatchSize);
-                    }
-
-                    if (betDataProvider == null)
-                    {
-                        Console.WriteLine("Unknown DataProviderType " + dataProviderSection);
-                    }
-                    else
-                    {
-                        _betDataProviders.Add(betDataProvider);
-                    }
-                }
+                ProcessBetDataProviders(betDataProviders.CsvBetDataProviders);
+                ProcessBetDataProviders(betDataProviders.RandomBetDataProviders);
             }
         }
 
@@ -61,6 +46,38 @@ namespace SimpleRiskApplication
                 betDataProvider.BetsProvided -= BetDataProviderOnBetsProvided;
                 betDataProvider.Stop();
             }
+        }
+
+        private void ProcessBetDataProviders(IEnumerable configurationElementCollection)
+        {
+            foreach (var csvBetDataProvider in configurationElementCollection)
+            {
+                var betDataProvider = GetDataProviderSection(csvBetDataProvider);
+                if (betDataProvider == null)
+                {
+                    Console.WriteLine("Unknown BetDataProviderType " + betDataProvider);
+                }
+                else
+                {
+                    _betDataProviders.Add(betDataProvider);
+                }
+            }
+        }
+
+        private BetDataProvider GetDataProviderSection(object dataProviderSection)
+        {
+            BetDataProvider betDataProvider = null;
+            if (dataProviderSection is RandomBetDataProvider)
+            {
+                var randomBetDataProviderSection = dataProviderSection as RandomBetDataProvider;
+                betDataProvider = _betDataProviderFactory.CreateRandomBetDataProvider(randomBetDataProviderSection.NumberOfBets, randomBetDataProviderSection.MaxBetBatchSize);
+            }
+            else if (dataProviderSection is CsvBetDataProvider)
+            {
+                var csvBetDataProviderSection = dataProviderSection as CsvBetDataProvider;
+                betDataProvider = _betDataProviderFactory.CreateCsvBetDataProvider(csvBetDataProviderSection.File, csvBetDataProviderSection.Settled, csvBetDataProviderSection.MaxBetBatchSize);
+            }
+            return betDataProvider;
         }
 
         private void BetDataProviderOnBetsProvided(object sender, BetsProvidedEventArgs betsProvidedEventArgs)

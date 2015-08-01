@@ -56,10 +56,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Config\BetDataProviders.cs" />
+    <Compile Include="Config\CsvBetDataProviders.cs" />
+    <Compile Include="Config\CsvBetDataProvider.cs" />
     <Compile Include="ViewModel\IBetViewModels.cs" />
-    <Compile Include="Config\DataProviderSectionGroup.cs" />
+    <Compile Include="Config\RandomBetDataProviders.cs" />
     <Compile Include="DataProviderManager.cs" />
-    <Compile Include="Config\RandomBetDataProviderSection.cs" />
+    <Compile Include="Config\RandomBetDataProvider.cs" />
     <Compile Include="ViewModel\InMemoryBetDataViewModels.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ViewModel\BetViewModel.cs" />
@@ -101,6 +104,12 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="Resources\CSVFiles\Settled.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\CSVFiles\Unsettled.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

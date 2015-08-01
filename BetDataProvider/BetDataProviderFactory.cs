@@ -1,4 +1,4 @@
-﻿using System.Security.Cryptography.X509Certificates;
+﻿using BetDataAcquisition.Providers;
 
 namespace BetDataAcquisition
 {
@@ -8,6 +8,20 @@ namespace BetDataAcquisition
         {
             var randomBetDataProvider = new RandomBetDataProvider(numberOfBets, maxBetBatchSize);
             return randomBetDataProvider;
+        }
+
+        public BetDataProvider CreateCsvBetDataProvider(string file, bool settled, int maxBetBatchSize)
+        {
+            BetDataProvider csvBetDataProvider;
+            if (settled)
+            {
+                csvBetDataProvider = new CsvSettledBetDataProvider(file, maxBetBatchSize);
+            }
+            else
+            {
+                csvBetDataProvider = new CsvUnsettledBetDataProvider(file, maxBetBatchSize);
+            }
+            return csvBetDataProvider;
         }
     }
 }

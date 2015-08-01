@@ -16,5 +16,6 @@ namespace SimpleRiskApplication.ViewModel
         public int Participant => _bet.ParticipantId;
         public double Stake => _bet.Stake;
         public double Win => _bet.Win;
+        public bool Settled => _bet.Settled;
     }
 }
