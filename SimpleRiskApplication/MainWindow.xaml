@@ -1,0 +1,23 @@
+﻿<Window x:Class="SimpleRiskApplication.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SimpleRiskApplication"
+        mc:Ignorable="d"
+        Title="Simple Risk Application" Height="350" Width="525"
+        Loaded="Window_Loaded" Closing="Window_Closing">
+    <Grid>
+        <ListView>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Customer" DisplayMemberBinding="{Binding Customer}"/>
+                    <GridViewColumn Header="Event" DisplayMemberBinding="{Binding Event}"/>
+                    <GridViewColumn Header="Participant" DisplayMemberBinding="{Binding Participant}"/>
+                    <GridViewColumn Header="Stake" DisplayMemberBinding="{Binding Stake}"/>
+                    <GridViewColumn Header="Win" DisplayMemberBinding="{Binding Win}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Window>

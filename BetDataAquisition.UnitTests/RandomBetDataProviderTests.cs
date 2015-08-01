@@ -25,8 +25,6 @@ namespace BetDataAquisition.UnitTests
             var betsRecieved = new List<Bet>();
             var randomBetDataProvider = new RandomBetDataProvider(numberOfBets);
             randomBetDataProvider.BetsProvided += (sender, args) => { betsRecieved.AddRange(args.Bets); };
-
-            // When
             randomBetDataProvider.BetsProviderFinished += (sender, args) =>
             {
                 lock (_lockObject)
@@ -34,6 +32,8 @@ namespace BetDataAquisition.UnitTests
                     Monitor.Pulse(_lockObject);
                 }
             };
+
+            // When
             randomBetDataProvider.Start();
             lock (_lockObject)
             {
@@ -53,8 +53,6 @@ namespace BetDataAquisition.UnitTests
             var betsRecieved = new List<List<Bet>>();
             var randomBetDataProvider = new RandomBetDataProvider(numberOfBets, maxBetsBatchSize);
             randomBetDataProvider.BetsProvided += (sender, args) => { betsRecieved.Add(new List<Bet>(args.Bets)); };
-
-            // When
             randomBetDataProvider.BetsProviderFinished += (sender, args) =>
             {
                 lock (_lockObject)
@@ -62,6 +60,8 @@ namespace BetDataAquisition.UnitTests
                     Monitor.Pulse(_lockObject);
                 }
             };
+
+            // When
             randomBetDataProvider.Start();
             lock (_lockObject)
             {

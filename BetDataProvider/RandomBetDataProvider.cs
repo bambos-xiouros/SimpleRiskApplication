@@ -34,18 +34,13 @@ namespace BetDataAcquisition
                     var bet = CreateRandomBet();
                     newBets.Add(bet);
 
-                    if (newBets.Count == _maxBetBatchSize)
+                    _numberOfBetsProvided++;
+
+                    if (newBets.Count == _maxBetBatchSize || _numberOfBetsProvided == _numberOfBets)
                     {
                         OnBetsProvided(new BetsProvidedEventArgs(newBets));
                         newBets.Clear();
                     }
-
-                    _numberOfBetsProvided++;
-                }
-
-                if (newBets.Any())
-                {
-                    OnBetsProvided(new BetsProvidedEventArgs(newBets));
                 }
 
                 OnBetsProvidedFinished(new BetsProviderFinishedEventArgs());
