@@ -1,25 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using BetDataAcquisition;
+using SimpleRiskApplication.ViewModel;
 
 namespace SimpleRiskApplication
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
         private readonly DataProviderManager _dataProviderManager;
 
@@ -27,8 +16,13 @@ namespace SimpleRiskApplication
         {
             InitializeComponent();
 
+            // IoC Layer would handle all of this
             var betDataProviderFactory = new BetDataProviderFactory();
-            _dataProviderManager = new DataProviderManager(betDataProviderFactory);
+            var betViewModels = new InMemoryBetViewModels();
+            var mainWindowViewModel = new MainWindowViewModel(betViewModels);
+            _dataProviderManager = new DataProviderManager(betDataProviderFactory, betViewModels);
+
+            DataContext = mainWindowViewModel;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -37,7 +31,7 @@ namespace SimpleRiskApplication
             _dataProviderManager.StartAllDataProviders();
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void Window_Closing(object sender, CancelEventArgs e)
         {
             _dataProviderManager.StopAllDataProviders();
         }

@@ -1,24 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BetModel;
 
 namespace SimpleRiskApplication.ViewModel
 {
-    internal class BetViewModel
+    public class BetViewModel : ViewModelBase
     {
-        private readonly BetViewModel _bet;
+        private readonly Bet _bet;
 
-        public BetViewModel(BetViewModel bet)
+        public BetViewModel(Bet bet)
         {
             _bet = bet;
         }
 
-        public int Customer => _bet.Customer;
-        public int Event => _bet.Event;
-        public int Participant => _bet.Participant;
-        public int Stake => _bet.Stake;
-        public int Win => _bet.Win;
+        public int Customer => _bet.CustomerId;
+        public int Event => _bet.EventId;
+        public int Participant => _bet.ParticipantId;
+        public double Stake => _bet.Stake;
+        public double Win => _bet.Win;
     }
 }

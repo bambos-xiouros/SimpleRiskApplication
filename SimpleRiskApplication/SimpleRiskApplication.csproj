@@ -56,9 +56,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModel\IBetViewModels.cs" />
+    <Compile Include="Config\DataProviderSectionGroup.cs" />
     <Compile Include="DataProviderManager.cs" />
-    <Compile Include="Config\DataProviders.cs" />
+    <Compile Include="Config\RandomBetDataProviderSection.cs" />
+    <Compile Include="ViewModel\InMemoryBetDataViewModels.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ViewModel\BetViewModel.cs" />
+    <Compile Include="ViewModel\MainWindowViewModel.cs" />
+    <Compile Include="ViewModel\ViewModelBase.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -103,6 +109,10 @@
     <ProjectReference Include="..\BetDataProvider\BetDataAcquisition.csproj">
       <Project>{a256b692-7689-4766-9c0e-5834d52ec289}</Project>
       <Name>BetDataAcquisition</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BetModel\BetModel.csproj">
+      <Project>{19165E07-5CF7-4F73-9CBD-848D46D5DDBD}</Project>
+      <Name>BetModel</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -8,7 +8,7 @@
         Title="Simple Risk Application" Height="350" Width="525"
         Loaded="Window_Loaded" Closing="Window_Closing">
     <Grid>
-        <ListView>
+        <ListView ItemsSource="{Binding BetViewModels}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Customer" DisplayMemberBinding="{Binding Customer}"/>

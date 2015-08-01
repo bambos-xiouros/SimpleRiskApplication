@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using BetDataAcquisition;
 using SimpleRiskApplication.Config;
+using SimpleRiskApplication.ViewModel;
 
 namespace SimpleRiskApplication
 {
@@ -10,10 +11,12 @@ namespace SimpleRiskApplication
     {
         private readonly List<BetDataProvider> _betDataProviders = new List<BetDataProvider>();
         private readonly BetDataProviderFactory _betDataProviderFactory;
+        private readonly IBetViewModels _betViewModels;
 
-        public DataProviderManager(BetDataProviderFactory betDataProviderFactory)
+        public DataProviderManager(BetDataProviderFactory betDataProviderFactory, IBetViewModels betViewModels)
         {
             _betDataProviderFactory = betDataProviderFactory;
+            _betViewModels = betViewModels;
         }
 
         public void CreateDataProvidersFromConfig()
@@ -46,6 +49,7 @@ namespace SimpleRiskApplication
         {
             foreach (var betDataProvider in _betDataProviders)
             {
+                betDataProvider.BetsProvided += BetDataProviderOnBetsProvided;
                 betDataProvider.Start();
             }
         }
@@ -54,8 +58,14 @@ namespace SimpleRiskApplication
         {
             foreach (var betDataProvider in _betDataProviders)
             {
+                betDataProvider.BetsProvided -= BetDataProviderOnBetsProvided;
                 betDataProvider.Stop();
             }
+        }
+
+        private void BetDataProviderOnBetsProvided(object sender, BetsProvidedEventArgs betsProvidedEventArgs)
+        {
+            _betViewModels.AddRange(betsProvidedEventArgs.Bets);
         }
     }
 }
