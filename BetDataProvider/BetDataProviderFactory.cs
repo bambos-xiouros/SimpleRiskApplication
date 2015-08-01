@@ -4,9 +4,9 @@ namespace BetDataAcquisition
 {
     public class BetDataProviderFactory
     {
-        public BetDataProvider CreateRandonBetDataProvider(float betsCreatedPerSecond)
+        public BetDataProvider CreateRandomBetDataProvider(int numberOfBets, int maxBetBatchSize)
         {
-            var randomBetDataProvider = new RandomBetDataProvider(betsCreatedPerSecond);
+            var randomBetDataProvider = new RandomBetDataProvider(numberOfBets, maxBetBatchSize);
             return randomBetDataProvider;
         }
     }

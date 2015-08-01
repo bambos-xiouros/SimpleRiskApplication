@@ -44,11 +44,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="RandomBetDataProviderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BetDataProvider\BetDataAcquisition.csproj">
+      <Project>{A256B692-7689-4766-9C0E-5834D52EC289}</Project>
+      <Name>BetDataAcquisition</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BetModel\BetModel.csproj">
+      <Project>{19165E07-5CF7-4F73-9CBD-848D46D5DDBD}</Project>
+      <Name>BetModel</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

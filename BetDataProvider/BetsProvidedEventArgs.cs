@@ -6,9 +6,9 @@ namespace BetDataAcquisition
 {
     public class BetsProvidedEventArgs : EventArgs
     {
-        public IEnumerator<Bet> Bets { get; private set; }
+        public IEnumerable<Bet> Bets { get; private set; }
 
-        internal BetsProvidedEventArgs(IEnumerator<Bet> bets)
+        internal BetsProvidedEventArgs(IEnumerable<Bet> bets)
         {
             Bets = bets;
         }
