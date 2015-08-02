@@ -63,7 +63,6 @@
     <Compile Include="Converters\GreaterThanConverter.cs" />
     <Compile Include="Converters\IsGreaterThanOrEqualToConverter.cs" />
     <Compile Include="ViewModel\CustomerViewModel.cs" />
-    <Compile Include="ViewModel\IBetViewModels.cs" />
     <Compile Include="Config\RandomBetDataProviders.cs" />
     <Compile Include="Data\BetDataProviderManager.cs" />
     <Compile Include="Config\RandomBetDataProvider.cs" />
