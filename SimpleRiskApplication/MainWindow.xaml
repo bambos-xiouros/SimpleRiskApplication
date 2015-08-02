@@ -3,24 +3,44 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SimpleRiskApplication"
         mc:Ignorable="d"
         Title="Simple Risk Application" Height="350" Width="525"
         Loaded="Window_Loaded" Closing="Window_Closing" 
         Icon="Resources/logosmall.png">
 
     <Grid>
-        <ListView ItemsSource="{Binding BetViewModels}" Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="5" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <ListView Name="Testasd" Grid.Row="0" ItemsSource="{Binding CustomerViewModels}" SelectedItem="{Binding SelectedCustomerViewModel}" Margin="5" >
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Customer" DisplayMemberBinding="{Binding Customer}"/>
-                    <GridViewColumn Header="Event" DisplayMemberBinding="{Binding Event}"/>
-                    <GridViewColumn Header="Participant" DisplayMemberBinding="{Binding Participant}"/>
-                    <GridViewColumn Header="Stake" DisplayMemberBinding="{Binding Stake}"/>
-                    <GridViewColumn Header="Win" DisplayMemberBinding="{Binding Win}"/>
-                    <GridViewColumn Header="Settled" DisplayMemberBinding="{Binding Settled}"/>
+                    <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id, Mode=OneWay}"/>
+                    <GridViewColumn Header="Unusual Win Rate" DisplayMemberBinding="{Binding HasUnusualWinRate, Mode=OneWay}"/>
                 </GridView>
             </ListView.View>
         </ListView>
+
+        <GridSplitter Grid.Row="1" Height="5" VerticalAlignment="Stretch" />
+        
+        <ListView Grid.Row="2" 
+                  ItemsSource="{Binding SelectedCustomerViewModel.BetDataViewModels}" 
+                  Margin="5">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Customer" DisplayMemberBinding="{Binding CustomerViewModel.Id, Mode=OneWay}"/>
+                    <GridViewColumn Header="Unusual Win Rate" DisplayMemberBinding="{Binding CustomerViewModel.HasUnusualWinRate, Mode=OneWay}"/>
+                    <GridViewColumn Header="Event" DisplayMemberBinding="{Binding Event, Mode=OneWay}"/>
+                    <GridViewColumn Header="Participant" DisplayMemberBinding="{Binding Participant, Mode=OneWay}"/>
+                    <GridViewColumn Header="Stake" DisplayMemberBinding="{Binding Stake, Mode=OneWay}"/>
+                    <GridViewColumn Header="Win" DisplayMemberBinding="{Binding Win, Mode=OneWay}"/>
+                    <GridViewColumn Header="Settled" DisplayMemberBinding="{Binding Settled, Mode=OneWay}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        
     </Grid>
 </Window>

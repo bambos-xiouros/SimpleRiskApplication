@@ -56,16 +56,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Config\BetDataProviderConfigReader.cs" />
     <Compile Include="Config\BetDataProviders.cs" />
     <Compile Include="Config\CsvBetDataProviders.cs" />
     <Compile Include="Config\CsvBetDataProvider.cs" />
+    <Compile Include="Rules\ApplicationRulesApplier.cs" />
+    <Compile Include="ViewModel\CustomerViewModel.cs" />
+    <Compile Include="Rules\IApplicationRulesApplier.cs" />
     <Compile Include="ViewModel\IBetViewModels.cs" />
     <Compile Include="Config\RandomBetDataProviders.cs" />
-    <Compile Include="DataProviderManager.cs" />
+    <Compile Include="Data\BetDataProviderManager.cs" />
     <Compile Include="Config\RandomBetDataProvider.cs" />
-    <Compile Include="ViewModel\InMemoryBetDataViewModels.cs" />
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="ViewModel\BetViewModel.cs" />
+    <Compile Include="ViewModel\BetDataViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Page Include="MainWindow.xaml">

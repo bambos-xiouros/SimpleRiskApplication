@@ -44,11 +44,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BetDataCacheFactory.cs" />
     <Compile Include="BetDataProvider.cs" />
     <Compile Include="BetDataProviderFactory.cs" />
     <Compile Include="BetsProvidedEventArgs.cs" />
     <Compile Include="BetsProvidedEventHandler.cs" />
     <Compile Include="BetsProviderFinishedEventArgs.cs" />
+    <Compile Include="Cache\BetsAddedEventArgs.cs" />
+    <Compile Include="Cache\CustomerAddedEventArgs.cs" />
+    <Compile Include="Cache\CustomerAddedEventHandler.cs" />
+    <Compile Include="Cache\BetsAddedEventHandler.cs" />
+    <Compile Include="Cache\InMemoryConcurrentCustomerCache.cs" />
+    <Compile Include="ICustomerCache.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\CsvBetDataProvider.cs" />
     <Compile Include="Providers\CsvSettledBetDataProvider.cs" />

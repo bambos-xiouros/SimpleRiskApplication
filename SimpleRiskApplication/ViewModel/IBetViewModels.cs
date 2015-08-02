@@ -5,6 +5,6 @@ namespace SimpleRiskApplication.ViewModel
 {
     public interface IBetViewModels
     {
-        void AddRange(IEnumerable<Bet> bets);
+        void AddRange(Customer customer, IEnumerable<Bet> bets);
     }
 }

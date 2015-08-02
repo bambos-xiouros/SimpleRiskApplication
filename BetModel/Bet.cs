@@ -1,4 +1,6 @@
-﻿namespace BetModel
+﻿using System.ComponentModel;
+
+namespace BetModel
 {
     public class Bet
     {
@@ -19,5 +21,7 @@
 
         public double Win { get; set; }
         public bool Settled { get; set; }
+
+        public bool IsHighBet { get; set; }
     }
 }
