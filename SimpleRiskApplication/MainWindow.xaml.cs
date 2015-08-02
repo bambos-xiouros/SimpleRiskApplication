@@ -5,7 +5,6 @@ using BetDataAcquisition;
 using BetDataAcquisition.Cache;
 using SimpleRiskApplication.Config;
 using SimpleRiskApplication.Data;
-using SimpleRiskApplication.Rules;
 using SimpleRiskApplication.ViewModel;
 
 namespace SimpleRiskApplication
@@ -31,14 +30,9 @@ namespace SimpleRiskApplication
             var betDataCache = betDataCacheFactory.CreateInMemoryBetDataCache();
 
             _betDataProviderManager = new BetDataProviderManager(betDataProviders, betDataCache);
+            
 
-            // todo - from config is better
-            var applicationRulesApplier = new ApplicationRulesApplier
-            {
-                UnusualWinRateValue = 60
-            };
-
-            _mainWindowViewModel = new MainWindowViewModel(betDataCache, applicationRulesApplier);
+            _mainWindowViewModel = new MainWindowViewModel(betDataCache);
             DataContext = _mainWindowViewModel;
         }
 

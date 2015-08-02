@@ -60,9 +60,9 @@
     <Compile Include="Config\BetDataProviders.cs" />
     <Compile Include="Config\CsvBetDataProviders.cs" />
     <Compile Include="Config\CsvBetDataProvider.cs" />
-    <Compile Include="Rules\ApplicationRulesApplier.cs" />
+    <Compile Include="Converters\GreaterThanConverter.cs" />
+    <Compile Include="Converters\IsGreaterThanOrEqualToConverter.cs" />
     <Compile Include="ViewModel\CustomerViewModel.cs" />
-    <Compile Include="Rules\IApplicationRulesApplier.cs" />
     <Compile Include="ViewModel\IBetViewModels.cs" />
     <Compile Include="Config\RandomBetDataProviders.cs" />
     <Compile Include="Data\BetDataProviderManager.cs" />
@@ -129,6 +129,15 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\logosmall.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\tick.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\warning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\highstake.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

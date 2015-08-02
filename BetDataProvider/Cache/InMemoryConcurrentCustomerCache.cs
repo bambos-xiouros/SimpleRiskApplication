@@ -7,15 +7,19 @@ namespace BetDataAcquisition.Cache
 {
     internal class InMemoryConcurrentGetDataCache : IBetDataCache
     {
-        private readonly ConcurrentDictionary<int, List<Bet>> _customerIdToBetsMap = new ConcurrentDictionary<int, List<Bet>>();
+        private readonly object _lockObject = new object();
+        private readonly Dictionary<int, List<Bet>> _customerIdToBetsMap = new Dictionary<int, List<Bet>>();
 
         public event BetsAddedEventHandler BetsAddedEventHandler;
         public event CustomerAddedEventHandler CustomerAddedEventHandler;
 
         public void AddBets(IEnumerable<Bet> bets)
         {
-            var newItemsDictionary = AddToCache(bets);
-            FireNewBetsEvents(newItemsDictionary);
+            lock (_lockObject)
+            {
+                var newItemsDictionary = AddToCache(bets);
+                FireNewBetsEvents(newItemsDictionary);
+            }
         }
 
         protected virtual void OnBetsAdded(BetsAddedEventArgs e)

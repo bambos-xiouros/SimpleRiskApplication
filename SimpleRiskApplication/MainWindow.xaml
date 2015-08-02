@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:converters="clr-namespace:SimpleRiskApplication.Converters"
         mc:Ignorable="d"
         Title="Simple Risk Application" Height="350" Width="525"
         Loaded="Window_Loaded" Closing="Window_Closing" 
@@ -11,7 +12,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
-            <RowDefinition Height="5" />
+            <RowDefinition Height="5"/>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
@@ -19,25 +20,130 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id, Mode=OneWay}"/>
-                    <GridViewColumn Header="Unusual Win Rate" DisplayMemberBinding="{Binding HasUnusualWinRate, Mode=OneWay}"/>
+                    <GridViewColumn Header="Win Rate" DisplayMemberBinding="{Binding WinRatePercentage, StringFormat='{}{0}%', Mode=OneWay}"/>
+                    <GridViewColumn Header="Unusual Win Rate" >
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <ContentControl>
+                                    <ContentControl.Style>
+                                        <Style TargetType="{x:Type ContentControl}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding WinRatePercentage, Converter={x:Static converters:IsGreaterThanConverter.Instance}, ConverterParameter=60}" Value="True">
+                                                    <Setter Property="ContentTemplate">
+                                                        <Setter.Value>
+                                                            <DataTemplate>
+                                                                <Image Source="Resources/warning.png" Width="16" Height="16"/>
+                                                            </DataTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ContentControl.Style>
+                                </ContentControl>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Average Stake" DisplayMemberBinding="{Binding AverageStake, StringFormat={}{0:F2}, Mode=OneWay}" />
                 </GridView>
             </ListView.View>
         </ListView>
 
-        <GridSplitter Grid.Row="1" Height="5" VerticalAlignment="Stretch" />
-        
-        <ListView Grid.Row="2" 
+        <GridSplitter 
+            ResizeDirection="Rows" 
+            Grid.Row="1"
+            Width="Auto" 
+            Height="7"
+            HorizontalAlignment="Stretch" 
+            VerticalAlignment="Stretch" 
+            Margin="0"/>
+
+            <ListView Grid.Row="2" 
                   ItemsSource="{Binding SelectedCustomerViewModel.BetDataViewModels}" 
                   Margin="5">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Customer" DisplayMemberBinding="{Binding CustomerViewModel.Id, Mode=OneWay}"/>
-                    <GridViewColumn Header="Unusual Win Rate" DisplayMemberBinding="{Binding CustomerViewModel.HasUnusualWinRate, Mode=OneWay}"/>
                     <GridViewColumn Header="Event" DisplayMemberBinding="{Binding Event, Mode=OneWay}"/>
                     <GridViewColumn Header="Participant" DisplayMemberBinding="{Binding Participant, Mode=OneWay}"/>
                     <GridViewColumn Header="Stake" DisplayMemberBinding="{Binding Stake, Mode=OneWay}"/>
-                    <GridViewColumn Header="Win" DisplayMemberBinding="{Binding Win, Mode=OneWay}"/>
-                    <GridViewColumn Header="Settled" DisplayMemberBinding="{Binding Settled, Mode=OneWay}"/>
+                    <GridViewColumn Header="Win" DisplayMemberBinding="{Binding Win, Mode=OneWay}"/> 
+                    <GridViewColumn Header="Settled">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <ContentControl>
+                                    <ContentControl.Style>
+                                        <Style TargetType="{x:Type ContentControl}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Settled}" Value="True">
+                                                    <Setter Property="ContentTemplate">
+                                                        <Setter.Value>
+                                                            <DataTemplate>
+                                                                <Image Source="Resources/tick.png" Width="16" Height="16"/>
+                                                            </DataTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ContentControl.Style>
+                                </ContentControl>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Header="Risky">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <ContentControl>
+                                    <ContentControl.Style>
+                                        <Style TargetType="{x:Type ContentControl}">
+                                            <Style.Triggers>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding Settled}" Value="False"/>
+                                                        <Condition Binding="{Binding CustomerViewModel.WinRatePercentage, Converter={x:Static converters:IsGreaterThanConverter.Instance}, ConverterParameter=60}" Value="True"/>
+                                                    </MultiDataTrigger.Conditions>
+                                                    <Setter Property="ContentTemplate">
+                                                        <Setter.Value>
+                                                            <DataTemplate>
+                                                                <Image Source="Resources/warning.png" Width="16" Height="16"/>
+                                                            </DataTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                 </MultiDataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ContentControl.Style>
+                                </ContentControl>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Header="High Stake">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <ContentControl>
+                                    <ContentControl.Style>
+                                        <Style TargetType="{x:Type ContentControl}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Stake, Converter={x:Static converters:IsGreaterThanOrEqualToConverter.Instance}, ConverterParameter=1000}" Value="True">
+                                                    <Setter Property="ContentTemplate">
+                                                        <Setter.Value>
+                                                            <DataTemplate>
+                                                                <Image Source="Resources/highstake.jpg" Width="16" Height="16"/>
+                                                            </DataTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ContentControl.Style>
+                                </ContentControl>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
                 </GridView>
             </ListView.View>
         </ListView>
