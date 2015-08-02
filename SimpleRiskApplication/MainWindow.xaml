@@ -67,7 +67,23 @@
                     <GridViewColumn Header="Event" DisplayMemberBinding="{Binding Event, Mode=OneWay}"/>
                     <GridViewColumn Header="Participant" DisplayMemberBinding="{Binding Participant, Mode=OneWay}"/>
                     <GridViewColumn Header="Stake" DisplayMemberBinding="{Binding Stake, Mode=OneWay}"/>
-                    <GridViewColumn Header="Win" DisplayMemberBinding="{Binding Win, Mode=OneWay}"/> 
+                    <GridViewColumn Header="Win" DisplayMemberBinding="{Binding Win, Mode=OneWay}"/>
+
+                    <GridViewColumn Header="Avg Stake Ratio">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock>
+                                    <TextBlock.Text>
+                                        <MultiBinding Converter="{x:Static converters:StakeMultiplierConverter.Instance}" >
+                                            <Binding Path="Stake" />
+                                            <Binding Path="CustomerViewModel.AverageStake" />
+                                        </MultiBinding>
+                                     </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    
                     <GridViewColumn Header="Settled">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
